@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-06-10T22:22:06+0700",
+    date = "2024-06-23T22:05:05+0700",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.3 (Oracle Corporation)"
 )
 @Component
@@ -34,7 +34,10 @@ public class UserMapperImpl implements UserMapper {
         userResponse.roles( roleEntitySetToRoleResponseSet( userEntity.getRoles() ) );
         userResponse.userName( userEntity.getUserName() );
         userResponse.userId( userEntity.getUserId() );
-        userResponse.DOB( userEntity.getDOB() );
+        if ( userEntity.getDOB() != null ) {
+            userResponse.DOB( DateTimeFormatter.ISO_LOCAL_DATE.format( userEntity.getDOB() ) );
+        }
+        userResponse.email( userEntity.getEmail() );
 
         return userResponse.build();
     }
@@ -45,16 +48,12 @@ public class UserMapperImpl implements UserMapper {
             return null;
         }
 
-        UserEntity userEntity = new UserEntity();
+        UserEntity.UserEntityBuilder userEntity = UserEntity.builder();
 
-        userEntity.setUserId( userRequest.getUserId() );
-        userEntity.setUserName( userRequest.getUserName() );
-        userEntity.setPassword( userRequest.getPassword() );
-        if ( userRequest.getDOB() != null ) {
-            userEntity.setDOB( DateTimeFormatter.ISO_LOCAL_DATE_TIME.format( userRequest.getDOB() ) );
-        }
+        userEntity.userId( userRequest.getUserId() );
+        userEntity.password( userRequest.getPassword() );
 
-        return userEntity;
+        return userEntity.build();
     }
 
     protected Set<RoleResponse> roleEntitySetToRoleResponseSet(Set<RoleEntity> set) {

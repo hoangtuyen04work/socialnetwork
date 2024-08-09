@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-06-08T00:08:47+0700",
+    date = "2024-06-23T22:05:05+0700",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.3 (Oracle Corporation)"
 )
 @Component
@@ -19,8 +19,8 @@ public class PostLikeMapperImpl implements PostLikeMapper {
             return null;
         }
 
-        PostLikeEntity postLikeEntity = new PostLikeEntity();
+        PostLikeEntity.PostLikeEntityBuilder postLikeEntity = PostLikeEntity.builder();
 
-        return postLikeEntity;
+        return postLikeEntity.build();
     }
 }
